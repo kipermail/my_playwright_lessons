@@ -6,7 +6,7 @@ My Playwright lessons
 About ...
 
 
-## Install guide
+# Install guide
 ...
 
 
@@ -15,5 +15,5 @@ About ...
 ...
 
 # Useful links
--https://playwright.dev/
--https://github.com/microsoft/playwright-python
+- (https://playwright.dev/)
+- (https://github.com/microsoft/playwright-python)
