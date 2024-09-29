@@ -26,9 +26,7 @@ def run(playwright: Playwright) -> None:
     page.close()
 
     # ---------------------
-    # ---------------------
-
-    # ---------------------
+    
 
 
     context.close()
@@ -36,4 +34,4 @@ def run(playwright: Playwright) -> None:
 
 # def test_createTC():
 with sync_playwright() as playwright:
-    run(playwright) #/////
+    run(playwright)
