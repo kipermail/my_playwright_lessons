@@ -9,8 +9,10 @@ def get_playwright():
 
 
 @fixture
-def desktop_app(get_playwright):
-    app = App(get_playwright, base_url="http://127.0.0.1:8000")
+def desktop_app(get_playwright, request):
+    #base_url = request.config.getoption("--base_url")
+    base_url = request.config.getini("base_url")
+    app = App(get_playwright, base_url=base_url)
     app.goto("/")
     yield app
     app.close()       
@@ -23,3 +25,7 @@ def desktop_app_auth(desktop_app):
     app.login("alice", "Qamania123")
     yield app     
     
+
+def pytest_addoption(parser):
+    #parser.addoption("--base_url", action="store", default="http://127.0.0.1:8000")
+    parser.addini("base_url", help="base url of tested site", default="http://127.0.0.1:8000") 
