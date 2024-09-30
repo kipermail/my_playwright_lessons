@@ -29,3 +29,12 @@ def desktop_app_auth(desktop_app, request):
     app.login(**config)
     yield app     
     
+def pytest_addoption(parser):
+    parser.addoption("--base_url", action="store", default="http://127.0.0.1:8000")
+    parser.addoption("--secure", action="store", default="secure.json")
+
+
+def load_config(file):
+    config_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), file)
+    with open(config_file) as cfg:
+        return json.loads(cfg.read())
