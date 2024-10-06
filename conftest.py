@@ -54,7 +54,7 @@ def mobile_app_auth(mobile_app, request):
 def pytest_addoption(parser):
     parser.addoption("--base_url", action="store", default="http://127.0.0.1:8000")
     parser.addoption("--secure", action="store", default="secure.json")
-    parser.addoption("--mdevice", action="store", default="iPhone 12 Pro")
+    parser.addoption("--mdevice", action="store", default="")
 
 
 def load_config(file):
