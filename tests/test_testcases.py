@@ -1,12 +1,17 @@
 from pytest import mark
 
-test_data = [
+ddt = {
+    "argnames": "test_name, description",
+    "argvalues": [
     ("hello", "world"),
     ("hello", ""),
-    ("123", "world123"),
-]
+    ("123", "world123") ],
+    "ids" : ["general test", "empty description", "number in name"],
+}
 
-@mark.parametrize("test_name, description", test_data, ids=["general test", "empty description", "number in name"])
+
+
+@mark.parametrize(**ddt)
 def test_new_testcase(desktop_app_auth, test_name, description):
     desktop_app_auth.navigate_to("Create new test")
     desktop_app_auth.create_test(test_name, description)
