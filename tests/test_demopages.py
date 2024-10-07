@@ -12,5 +12,12 @@ def test_wait_more_10_sec(desktop_app_auth):
 @mark.skip
 def test_ajax(desktop_app_auth):
     desktop_app_auth.navigate_to("Demo pages")
-    desktop_app_auth.demo_pages.open_page_and_wait_ajax(6)
-    assert desktop_app_auth.demo_pages.get_ajax_responce_count() == 6
+    desktop_app_auth.demo_pages.open_page_and_wait_ajax(2)
+    assert desktop_app_auth.demo_pages.get_ajax_responce_count() == 2
+
+def test_handlers(desktop_app_auth):
+    desktop_app_auth.navigate_to("Demo pages")
+    desktop_app_auth.demo_pages.click_new_page_button(ctrl_key=False)
+    desktop_app_auth.demo_pages.inject_js()
+    desktop_app_auth.navigate_to("Test Cases")
+    assert desktop_app_auth.test_cases.check_test_exists("Check new test")

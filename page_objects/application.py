@@ -1,5 +1,6 @@
+import logging
 from playwright.sync_api import Browser
-from playwright.sync_api import Request, Route
+from playwright.sync_api import Request, Route, ConsoleMessage, Dialog
 from page_objects.test_cases import TestCases
 from page_objects.demo_pages import DemoPages
 
@@ -13,7 +14,18 @@ class App():
         self.base_url = base_url
         self.test_cases = TestCases(self.page)
         self.demo_pages = DemoPages(self.page)
-       
+
+        def console_handler(message: ConsoleMessage):
+            if message.type == "error":
+                logging.error(f"page: {self.page.url}, console error: {message.text}")
+
+        def dialog_handler(dialog: Dialog):
+            logging.warning(f"page: {self.page.url}, dialog text: {dialog.message}")
+            dialog.accept()
+            
+        self.page.on("console", console_handler)
+        self.page.on("dialog", dialog_handler)
+
 
     def goto(self, endpoint: str, use_base_url=True):   
         if use_base_url: 
