@@ -1,4 +1,5 @@
 from playwright.sync_api import Browser
+from playwright.sync_api import Request, Route
 from page_objects.test_cases import TestCases
 from page_objects.demo_pages import DemoPages
 
@@ -42,10 +43,26 @@ class App():
 
     def is_menu_button_visible(self):
         return self.page.is_visible('.menuBtn')
+    
+    def intercept_requests(self, url, payload):
+        def handler(route: Route, request: Request):
+            route.fulfill(status=200, body=payload)
+            
+        self.page.route(url, handler)
+       
+
+    def stop_intercept(self, url: str):
+        self.page.unroute(url)    
+
 
     def get_location(self):
         return self.page.text_content('.position')
-        
+    
+    def refresh_deshboard(self):
+        self.page.click('input')
+
+    def get_total_test_stats(self):
+        return self.page.text_content(".total >> span")    
 
     def close(self):
         self.page.close()
