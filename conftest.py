@@ -55,7 +55,7 @@ def desktop_app_auth(desktop_app, request):
     yield app     
     
 
-@fixture(params = ["iPhone 12 Pro", "iPhone 14", "Pixel 6"], ids = ["iPhone 12 Pro", "iPhone 14", "Pixel 7"]   )
+@fixture(params = ["iPhone 12 Pro", "iPhone 14", "Pixel 7"], ids = ["iPhone 12 Pro", "iPhone 14", "Pixel 7"]   )
 def mobile_app(get_playwright, get_browser, request):
     if os.environ.get("PWBROWSER") == "firefox":
         pytest.skip("Browser is not supported for mobile tests")
