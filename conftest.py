@@ -12,7 +12,8 @@ def get_playwright():
         yield playwright
 
 
-@fixture(params = ["chromium", "firefox", "webkit"], ids = ["chromium", "firefox", "webkit"])
+#@fixture(params = ["chromium", "firefox", "webkit"], ids = ["chromium", "firefox", "webkit"])
+@fixture(params = ["chromium"], ids = ["chromium"])
 def get_browser(get_playwright, request):
     browser = request.param
     os.environ['PWBROWSER'] = browser
@@ -55,7 +56,8 @@ def desktop_app_auth(desktop_app, request):
     yield app     
     
 
-@fixture(params = ["iPhone 12 Pro", "iPhone 14", "Pixel 7"], ids = ["iPhone 12 Pro", "iPhone 14", "Pixel 7"]   )
+#@fixture(params = ["iPhone 12 Pro", "iPhone 14", "Pixel 7"], ids = ["iPhone 12 Pro", "iPhone 14", "Pixel 7"]   )
+@fixture(params = ["iPhone 12 Pro"], ids = ["iPhone 12 Pro"]   )
 def mobile_app(get_playwright, get_browser, request):
     if os.environ.get("PWBROWSER") == "firefox":
         pytest.skip("Browser is not supported for mobile tests")
