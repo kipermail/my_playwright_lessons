@@ -8,15 +8,6 @@ class WebService:
     
 
     def _get_token(self, url: str):
-        # rsp = self.session.get(self.base_url + url)
-        # <input type="hidden" name="csrfmiddlewaretoken" value="8GEklsYD5Nf0FryfKMYkCgj4jPNW55AwDAcGVw3Xej7NPSuT32FFtDfNnHlasiSq">
-        # match = re.search('<input type="hidden" name="csrfmiddlewaretoken" value="(.+?)">', rsp.text)
-        # print(match)
-        # if True: #match:
-        #     return match.group(1)
-        # else:
-        #     assert False, f'failed to get token {match.group(1)}' 
-
         response = self.session.get(self.base_url + url)
         html = response.text
         token = re.search('<input type="hidden" name="csrfmiddlewaretoken" value="(.+?)">', html)
