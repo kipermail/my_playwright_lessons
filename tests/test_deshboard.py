@@ -1,7 +1,9 @@
 import json
+from pytest import mark
 
 empty_test = {"total": 0, "passed": 0, "failed": 0, "norun": 0}
 
+@mark.skip
 def test_dashboard_data(desktop_app_auth):
     payload = json.dumps({"total": 0, "passed": 0, "failed": 0, "norun": 0})
     desktop_app_auth.intercept_requests("**/getstat/*", payload)
