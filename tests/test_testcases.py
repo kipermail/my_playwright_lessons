@@ -1,3 +1,4 @@
+import allure
 from pytest import mark
 
 ddt = {
@@ -12,6 +13,7 @@ ddt = {
 
 @mark.skip
 @mark.parametrize(**ddt)
+@allure.title("Creating new test case")
 def test_new_testcase(desktop_app_auth, test_name, description, get_db):
     tests = get_db.list_test_cases()
     desktop_app_auth.navigate_to("Create new test")
@@ -23,12 +25,14 @@ def test_new_testcase(desktop_app_auth, test_name, description, get_db):
     #desktop_app_auth.test_cases.delete_test_by_name(test_name)
     #desktop_app.close()
 
-@mark.skip
+#@mark.skip
+@allure.title("Test case dos not exist in the list")
 def test_testcase_does_not_exist(desktop_app_auth):
     desktop_app_auth.navigate_to("Test Cases")
     assert not desktop_app_auth.test_cases.check_test_exists("123321")
 
 @mark.skip
+@allure.title("Deleting test case from list")
 def test_delete_test_case(desktop_app_auth, get_web_service):
         test_name = "Test for deletion"
         get_web_service.create_test(test_name, "Delete me pls")
