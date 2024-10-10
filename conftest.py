@@ -15,19 +15,21 @@ from helpers.db import Database
 def precondition(request):
     logging.info('Precondition started')
     base_url = request.config.getoption("--base_url")
+    tcm = request.config.getini('tcm_report')
     secure = request.config.getoption("--secure")
     config = load_config(secure)
     yield
     logging.info('Postcondition started')
-    web = WebService(base_url)
-    web.login(**config['users']['userRole3'])
-    for test in request.node.items:
-        if len(test.own_markers) > 0:
-            if test.own_markers[0].name == "test_id":
-                if test.result_call.passed:
-                    web.report_test_execute(test.own_markers[0].args[0], "PASS")
-                if test.result_call.failed:
-                    web.report_test_execute(test.own_markers[0].args[0], "FAIL")
+    if tcm == 'True':
+        web = WebService(base_url)
+        web.login(**config['users']['userRole3'])
+        for test in request.node.items:
+            if len(test.own_markers) > 0:
+                if test.own_markers[0].name == "test_id":
+                    if test.result_call.passed:
+                        web.report_test_execute(test.own_markers[0].args[0], "PASS")
+                    if test.result_call.failed:
+                        web.report_test_execute(test.own_markers[0].args[0], "FAIL")
 
 
 
@@ -159,7 +161,7 @@ def pytest_addoption(parser):
     parser.addini("headless", help="Run browser in headless mode", default="True")
     #parser.addini("base_url", help="Base url of site under test", default="http://127.0.0.1:8000")
     parser.addini("db_path", help="path to sqlite db file", default= "/Users/medstar/Documents/projects/Python/TestMe-TCM-main/db.sqlite3")
-    
+    parser.addini('tcm_report', help='report test results to tcm', default='False')
 
 
 def load_config(file):
