@@ -2,12 +2,34 @@ import os
 import json
 import pytest
 import allure
+import logging
 from settings import *
 from pytest import fixture, hookimpl
 from playwright.sync_api import sync_playwright
 from page_objects.application import App
 from helpers.web_service import WebService
 from helpers.db import Database
+
+
+@fixture(scope='session', autouse=True)
+def precondition(request):
+    logging.info('Precondition started')
+    base_url = request.config.getoption("--base_url")
+    secure = request.config.getoption("--secure")
+    config = load_config(secure)
+    yield
+    logging.info('Postcondition started')
+    web = WebService(base_url)
+    web.login(**config['users']['userRole3'])
+    for test in request.node.items:
+        if len(test.own_markers) > 0:
+            if test.own_markers[0].name == "test_id":
+                if test.result_call.passed:
+                    web.report_test_execute(test.own_markers[0].args[0], "PASS")
+                if test.result_call.failed:
+                    web.report_test_execute(test.own_markers[0].args[0], "FAIL")
+
+
 
 
 @fixture(scope="session")

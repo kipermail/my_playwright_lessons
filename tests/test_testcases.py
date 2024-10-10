@@ -12,6 +12,7 @@ ddt = {
 
 
 @mark.skip
+#@mark.test_id(214)
 @mark.parametrize(**ddt)
 @allure.title("Creating new test case")
 def test_new_testcase(desktop_app_auth, test_name, description, get_db):
@@ -26,12 +27,14 @@ def test_new_testcase(desktop_app_auth, test_name, description, get_db):
     #desktop_app.close()
 
 #@mark.skip
+@mark.test_id(10)
 @allure.title("Test case dos not exist in the list")
 def test_testcase_does_not_exist(desktop_app_auth):
     desktop_app_auth.navigate_to("Test Cases")
     assert not desktop_app_auth.test_cases.check_test_exists("123321")
 
-@mark.skip
+#@mark.skip
+@mark.test_id(343)
 @allure.title("Deleting test case from list")
 def test_delete_test_case(desktop_app_auth, get_web_service):
         test_name = "Test for deletion"

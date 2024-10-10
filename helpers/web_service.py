@@ -37,5 +37,9 @@ class WebService:
         }
         response = self.session.post(self.base_url + '/test/new', data=data) 
     
+    def report_test_execute(self, test_id: int, status: str):
+        self.session.post(self.base_url + f'/tests/{test_id}/status', json={'status': status})
+
+
     def close(self):
         self.session.close()

@@ -26,6 +26,5 @@ def test_multiple_roles(desktop_app_auth, desktop_app_bob):
     bob.test_cases.delete_test_by_name("role_test")
     #get_db.delete_test_case('test by bob')
     assert int(after) == int(before) + 1, "Bob not add test to Alice"
-    assert False
 
     
